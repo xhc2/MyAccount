@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_account"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_color_50"
+    android:orientation="vertical"
+    tools:context="sudoku.myself.xhc.com.myaccount.AddAccountActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_label"
+                android:text="@string/money" />
+
+            <EditText
+                android:id="@+id/et_money"
+                style="@style/edit_style"
+                android:hint="@string/input_money"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                style="@style/text_label"
+                android:text="@string/money_for_what" />
+
+            <sudoku.myself.xhc.com.myaccount.FlowLayout
+                android:id="@+id/tag_flowlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    android:id="@+id/tag_breakfast"
+                    style="@style/text_flag_01"
+                    android:text="@string/breakfast" />
+
+                <TextView
+                    android:id="@+id/tag_launch"
+                    style="@style/text_flag_01"
+                    android:text="@string/launch" />
+
+                <TextView
+                    android:id="@+id/tag_dinner"
+                    style="@style/text_flag_01"
+                    android:text="@string/dinner" />
+
+                <TextView
+                    android:id="@+id/tag_snack"
+                    style="@style/text_flag_01"
+                    android:text="@string/snack" />
+
+
+                <TextView
+                    android:id="@+id/tag_shopping"
+                    style="@style/text_flag_01"
+                    android:text="@string/shopping" />
+
+                <TextView
+                    android:id="@+id/tag_travel"
+                    style="@style/text_flag_01"
+                    android:text="@string/travel" />
+
+                <TextView
+                    android:id="@+id/tag_haircut"
+                    style="@style/text_flag_01"
+                    android:text="@string/haircut" />
+
+                <TextView
+                    android:id="@+id/tag_transporttation"
+                    style="@style/text_flag_01"
+                    android:text="@string/transportation" />
+
+                <TextView
+                    android:id="@+id/tag_treatment"
+                    style="@style/text_flag_01"
+                    android:text="@string/treatment" />
+
+                <TextView
+                    android:id="@+id/tag_other"
+                    style="@style/text_flag_01"
+                    android:text="@string/other" />
+            </sudoku.myself.xhc.com.myaccount.FlowLayout>
+
+            <EditText
+                android:id="@+id/et_money_for_what"
+                style="@style/edit_style"
+                android:hint="@string/input_where"
+                android:inputType="text" />
+
+            <TextView
+                style="@style/text_label"
+                android:visibility="gone"
+                android:text="@string/category" />
+
+            <EditText
+                android:id="@+id/et_category"
+                style="@style/edit_style"
+                android:visibility="gone"
+                android:hint="@string/input_category" />
+
+            <TextView
+                style="@style/text_label"
+                android:text="@string/date" />
+
+            <EditText
+                android:id="@+id/et_time"
+                style="@style/edit_style"
+                android:hint="@string/input_date"
+                android:inputType="datetime" />
+
+            <TextView
+                style="@style/text_label"
+                android:text="@string/remark" />
+
+            <EditText
+                android:id="@+id/et_remark"
+                style="@style/edit_style"
+                android:hint="@string/input_remark" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:id="@+id/tv_type"
+                    style="@style/text_label"
+                    android:background="@color/white"
+                    android:text="@string/expend" />
+
+                <ToggleButton
+                    android:id="@+id/tb_type"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/check_drawable"
+                    android:button="@null"
+                    android:textOff=""
+                    android:textOn="" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

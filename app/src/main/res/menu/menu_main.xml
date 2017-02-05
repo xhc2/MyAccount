@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="sudoku.myself.xhc.com.myaccount.MainActivity">
+    <item
+        android:id="@+id/day_"
+        android:orderInCategory="100"
+        android:title="@string/day_"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/week_"
+        android:orderInCategory="100"
+        android:title="@string/week_"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/month_"
+        android:orderInCategory="100"
+        android:title="@string/month_"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/year_"
+        android:orderInCategory="100"
+        android:title="@string/year_"
+        app:showAsAction="never" />
+
+</menu>

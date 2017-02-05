@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="category_item">
+        <item>@string/breakfast</item>
+        <item>@string/launch</item>
+        <item>@string/dinner</item>
+        <item>@string/snack</item>
+        <item>@string/shopping</item>
+        <item>@string/travel</item>
+        <item>@string/haircut</item>
+        <item>@string/transportation</item>
+        <item>@string/treatment</item>
+
+
+
+    </string-array>
+
+</resources>
