@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity implements OnRecyleItemClick<Acco
     }
 
     public void updateUI(){
-        List<Account> listTemp =  dao.getAll();
+        List<Account> listTemp =  dao.getAllByTime();
         list.clear();
         if(listTemp != null){
             list.addAll(listTemp);

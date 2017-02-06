@@ -3,6 +3,7 @@ package sudoku.myself.xhc.com.myaccount;
 import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -38,6 +39,17 @@ public class AccountDao {
 
         }
 
+    }
+
+    public List<Account> getAllByTime(){
+        QueryBuilder<Account, Integer>  builder = dao.queryBuilder();
+        builder.orderBy("date" , false);
+        try{
+            return builder.query();
+        }catch (Exception e){
+
+        }
+        return null;
     }
 
     public List<Account> getAll(){

@@ -129,6 +129,23 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
     private void save() {
         String strMoney = etMoney.getText().toString();
         String strWhy = etWhere.getText().toString();
+        String dateStr = etDate.getText().toString();
+
+        if(TextUtils.isEmpty(dateStr)){
+            showToast(R.string.input_date_str);
+            return ;
+        }
+        else{
+            try{
+               Date date =  sdf.parse(dateStr);
+                account.setDate(date.getTime());
+            }
+            catch(Exception e){
+                showToast(R.string.input_date);
+                return ;
+            }
+        }
+
         if(TextUtils.isEmpty(strWhy)){
             showToast(R.string.input_category);
             return ;
@@ -202,6 +219,9 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
                 break;
             case R.id.tag_treatment:
                 account.setCategory(Account.TREATMENT);
+                break;
+            case R.id.tag_house:
+                account.setCategory(Account.HOUSE);
                 break;
             case R.id.tag_other:
                 etWhere.setEnabled(true);

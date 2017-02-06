@@ -99,7 +99,10 @@
                     android:id="@+id/tag_treatment"
                     style="@style/text_flag_01"
                     android:text="@string/treatment" />
-
+                <TextView
+                    android:id="@+id/tag_house"
+                    style="@style/text_flag_01"
+                    android:text="@string/house" />
                 <TextView
                     android:id="@+id/tag_other"
                     style="@style/text_flag_01"

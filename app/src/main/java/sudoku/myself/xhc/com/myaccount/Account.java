@@ -27,7 +27,8 @@ public class Account implements Parcelable{
     public static final int HAIRCUT = 8;
     public static final int TRANSPORTATION = 9;
     public static final int TREATMENT = 10;
-    public static final int OTHER = 11;
+    public static final int HOUSE = 11;
+    public static final int OTHER = 12;
 
     @DatabaseField(generatedId = true)
     private int id;

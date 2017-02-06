@@ -11,7 +11,7 @@
         <item>@string/haircut</item>
         <item>@string/transportation</item>
         <item>@string/treatment</item>
-
+        <item>@string/house</item>
 
 
     </string-array>

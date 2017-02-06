@@ -20,6 +20,8 @@
     <string name="input_date">e.g 2017-1-1 12:00</string>
     <string name="income">收入</string>
     <string name="expend">支出</string>
+    <string name="input_date_str">请输入时间</string>
+
 
     <!--去向-->
     <string name="breakfast">早餐</string>
@@ -31,5 +33,6 @@
     <string name="haircut">理发</string>
     <string name="transportation">交通</string>
     <string name="treatment">医疗</string>
+    <string name="house">房租</string>
     <string name="other">其他</string>
 </resources>
