@@ -57,6 +57,7 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
         tvAccount = (TextView) findViewById(R.id.tv_type);
         tbType = (ToggleButton) findViewById(R.id.tb_type);
         flowLayout = (FlowLayout) findViewById(R.id.tag_flowlayout);
+
     }
      private BackUpData backUpData ;
     private void init() {
@@ -78,7 +79,22 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
             account = new Account();
             account.setDate(System.currentTimeMillis());
         }
+        updateUI();
+    }
+
+    private void updateUI(){
+
         etDate.setText(sdf.format(new Date(account.getDate())));
+        etRemark.setText(account.getRemark());
+        if (account.getType() == Account.INCOME) {
+            tbType.setChecked(true);
+//            tvAccount.setText(R.string.income);
+//            account.setType(Account.INCOME);
+        } else {
+            tbType.setChecked(false);
+//            tvAccount.setText(R.string.expend);
+//            account.setType(Account.EXPEND);
+        }
     }
 
     private void setListener() {
@@ -164,7 +180,7 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
         }
 
         account.setWhy(strWhy);
-
+        account.setRemark(etRemark.getText().toString());
         if (modifyFlag) {
             //是修改
             dao.add(account);
