@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sudoku.myself.xhc.com.myaccount">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
     <application
         android:name="sudoku.myself.xhc.com.myaccount.MyApplication"
         android:allowBackup="true"
@@ -22,7 +26,9 @@
         <activity
             android:name=".AddAccountActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BaseActivity"/>
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".CategoryAccount"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

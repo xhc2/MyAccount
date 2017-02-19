@@ -35,4 +35,12 @@
     <string name="treatment">医疗</string>
     <string name="house">房租</string>
     <string name="other">其他</string>
+    <string name="all">共</string>
+
+    <string name="back_up">导入备份文件</string>
+    <string name="loading">加载中...</string>
+    <string name="back_up_success">备份成功</string>
+    <string name="not_file_back_file">没有找到备份文件</string>
+    <string name="sdcard_not_exist">sdcard 不存在,备份数据失败,请检测sdcard</string>
+
 </resources>

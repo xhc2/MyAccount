@@ -40,6 +40,8 @@ import java.util.Map;
             }
         }
 
+
+
         @Override
         public void onUpgrade(SQLiteDatabase database,
                               ConnectionSource connectionSource, int oldVersion, int newVersion)
@@ -55,6 +57,9 @@ import java.util.Map;
         }
 
         private static DatabaseHelper instance;
+
+
+
 
         /**
          * 单例获取该Helper

@@ -2,6 +2,8 @@ package sudoku.myself.xhc.com.myaccount;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,9 +34,18 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    private AccountDao dao ;
+    private AccountDao dao;
 
-    private String categoryItem[] ;
+    private String categoryItem[];
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            showToast(R.string.input_date_str);
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +70,9 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
         flowLayout = (FlowLayout) findViewById(R.id.tag_flowlayout);
 
     }
-     private BackUpData backUpData ;
+
+    private BackUpData backUpData;
+
     private void init() {
         backUpData = new BackUpData(this);
         categoryItem = getResources().getStringArray(R.array.category_item);
@@ -69,8 +82,8 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
         if (account != null) {
             //修改
             modifyFlag = true;
-            etMoney.setText(""+account.getMoney());
-            Log.e("xhc" , "category "+account.getCategory());
+            etMoney.setText("" + account.getMoney());
+            Log.e("xhc", "category " + account.getCategory());
             etWhere.setText(account.getWhy());
 
         } else {
@@ -82,7 +95,7 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
         updateUI();
     }
 
-    private void updateUI(){
+    private void updateUI() {
 
         etDate.setText(sdf.format(new Date(account.getDate())));
         etRemark.setText(account.getRemark());
@@ -101,7 +114,7 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
         tbType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.e("xhc" , "收入 - 支出"+b);
+                Log.e("xhc", "收入 - 支出" + b);
                 if (b) {
                     tvAccount.setText(R.string.income);
                     account.setType(Account.INCOME);
@@ -147,35 +160,32 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
         String strWhy = etWhere.getText().toString();
         String dateStr = etDate.getText().toString();
 
-        if(TextUtils.isEmpty(dateStr)){
+        if (TextUtils.isEmpty(dateStr)) {
             showToast(R.string.input_date_str);
-            return ;
-        }
-        else{
-            try{
-               Date date =  sdf.parse(dateStr);
+            return;
+        } else {
+            try {
+                Date date = sdf.parse(dateStr);
                 account.setDate(date.getTime());
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 showToast(R.string.input_date);
-                return ;
+                return;
             }
         }
 
-        if(TextUtils.isEmpty(strWhy)){
+        if (TextUtils.isEmpty(strWhy)) {
             showToast(R.string.input_category);
-            return ;
+            return;
         }
-        if(account.getCategory() == 0){
+        if (account.getCategory() == 0) {
             showToast(R.string.input_category);
-            return ;
+            return;
         }
 
-        if(TextUtils.isEmpty(strMoney)){
+        if (TextUtils.isEmpty(strMoney)) {
             showToast(R.string.input_money);
-            return ;
-        }
-        else{
+            return;
+        } else {
             account.setMoney(Float.parseFloat(strMoney));
         }
 
@@ -188,7 +198,26 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
             dao.add(account);
         }
         setResult(RESULT_OK);
+        backUpDataBase();
         finish();
+    }
+
+    private void backUpDataBase() {
+
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                MyFileUtils myFile = new MyFileUtils();
+                if(TextUtils.isEmpty(myFile.getExternalStorageDirectory())){
+                    handler.sendEmptyMessage(0);
+                    return ;
+                }
+                myFile.makeFileDirSdcrad(myFile.getExternalStorageDirectory() + "/" + MyFileUtils.BACKUPPATH);
+                myFile.backUP();
+
+            }
+        }.start();
 
     }
 

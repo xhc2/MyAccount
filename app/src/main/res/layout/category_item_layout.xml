@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:background="@drawable/expend_selector"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+
+    <ImageView
+        android:id="@+id/right_indicator"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:src="@drawable/icon_info_more"
+        android:layout_marginRight="10dp"
+        android:scaleType="centerInside"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        />
+
+
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:textSize="12sp"
+        android:textColor="@color/gray_color"
+        android:text="2017-1-1"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/right_indicator"
+        android:layout_marginRight="10dp"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:id="@+id/tv_account"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="14sp"
+        android:textColor="@color/main_color"
+        android:text="test"
+        android:maxLines="2"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/tv_size"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/gray_color"
+        android:text="(2)"
+        android:maxLines="2"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tv_account"
+        android:layout_toEndOf="@+id/tv_account" />
+</RelativeLayout>
