@@ -93,6 +93,14 @@ public class AccountDao {
         }
     }
 
+    public void delAccount(Account account){
+        try {
+        dao.delete(account);
+        } catch (Exception e) {
+
+        }
+    }
+
     public List<Account> getAllByTime() {
         QueryBuilder<Account, Integer> builder = dao.queryBuilder();
         builder.orderBy("date", false);

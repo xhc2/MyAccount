@@ -1,6 +1,8 @@
 package sudoku.myself.xhc.com.myaccount;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -19,10 +21,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class MainActivity extends BaseActivity implements OnRecyleItemClick<Account> {
+public class MainActivity extends BaseActivity implements OnRecyleItemClick<Account> , OnItemLongClickLis<Account>{
 
     private final int ADDREQUEST = 100;
     private final int UPDATEREQUEST = 121;
@@ -33,6 +37,7 @@ public class MainActivity extends BaseActivity implements OnRecyleItemClick<Acco
     private MyRecyleAdapter adapter;
     private List<Account> list = new ArrayList<Account>();
     private AccountDao dao;
+    private SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm" , Locale.getDefault());
     private Handler handler = new Handler() {
 
         @Override
@@ -62,6 +67,7 @@ public class MainActivity extends BaseActivity implements OnRecyleItemClick<Acco
         dao = new AccountDao(MainActivity.this);
         adapter = new MyRecyleAdapter(list, this);
         adapter.addOnRecyleItemClick(this);
+        adapter.setOnItemLongClickLis(this);
         updateUI();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -206,6 +212,29 @@ public class MainActivity extends BaseActivity implements OnRecyleItemClick<Acco
             dao.addAll(listTemp);
             handler.sendEmptyMessage(BACKUPSUCCESS);
         }
+
+    }
+
+    @Override
+    public void onLongClick(final Account account) {
+        if(account == null) return ;
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.hint))
+                .setMessage(getString(R.string.sure_del)+
+                        "\n "+getString(R.string.money)+":"+account.getMoney() +
+                        "\n"+getString(R.string.date)+":"+sdf.format(account.getDate())+
+                "\n"+getString(R.string.remark)+":"+account.getRemark())
+                .setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dao.delAccount(account);
+                        list.remove(account);
+                        adapter.refreshAllData(list);
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel), null)
+                .show();
+
 
     }
 

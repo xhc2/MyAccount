@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by xhc on 2017/2/5.
@@ -21,7 +22,7 @@ public class MyRecyleAdapter extends MyBaseAdapter<Account, MyRecyleAdapter.View
     public MyRecyleAdapter(List list, Context context) {
         super(list, context);
     }
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm" , Locale.getDefault());
 
 
     @Override
@@ -40,12 +41,24 @@ public class MyRecyleAdapter extends MyBaseAdapter<Account, MyRecyleAdapter.View
         }
         holder.tvAccount.setText(account.getMoney() + context.getString(R.string.rmb));
         holder.tvDate.setText(sdf.format(new Date(account.getDate())));
+        holder.tvRemark.setText(account.getRemark());
         holder.rlRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(lis != null){
                     lis.onItemClick(view , account , position);
                 }
+            }
+        });
+
+        holder.rlRoot.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(longLis != null){
+                    longLis.onLongClick(account);
+                }
+
+                return true;
             }
         });
 
@@ -56,12 +69,13 @@ public class MyRecyleAdapter extends MyBaseAdapter<Account, MyRecyleAdapter.View
         TextView tvAccount;
         TextView tvDate;
         RelativeLayout rlRoot;
+        TextView tvRemark;
         public ViewHolder(View itemView) {
             super(itemView);
             rlRoot = (RelativeLayout) itemView.findViewById(R.id.root);
             tvAccount = (TextView)itemView.findViewById(R.id.tv_account);
             tvDate = (TextView)itemView.findViewById(R.id.tv_date);
-
+            tvRemark = (TextView) itemView.findViewById(R.id.tv_remark);
         }
     }
 

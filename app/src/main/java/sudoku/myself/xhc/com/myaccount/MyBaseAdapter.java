@@ -18,6 +18,7 @@ public abstract class MyBaseAdapter<T, V extends RecyclerView.ViewHolder> extend
     protected List<T> list = new ArrayList<T>();
     protected Context context;
     protected OnRecyleItemClick lis ;
+    protected OnItemLongClickLis<T> longLis;
     protected DisplayImageOptions options;
     protected ImageLoader imageLoader = null;
 
@@ -27,6 +28,11 @@ public abstract class MyBaseAdapter<T, V extends RecyclerView.ViewHolder> extend
             this.list.addAll(list);
         }
     }
+
+    public void setOnItemLongClickLis(OnItemLongClickLis longLis){
+        this.longLis = longLis;
+    }
+
 
     @Override
     public int getItemCount() {
