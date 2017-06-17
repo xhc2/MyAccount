@@ -18,7 +18,7 @@ public class MyFileUtils {
     public static final String BACKUPPATH = "xhc_back_up";
     public static final String DATABASE = "sqlite-test.db";
 
-    public void backUP() {
+    public void backUP( ) {
         String dbpath = "/data/data/sudoku.myself.xhc.com.myaccount/databases/"+DATABASE;
 
         makeFileDirSdcrad(getExternalStorageDirectory() + "/"+BACKUPPATH);
@@ -26,13 +26,14 @@ public class MyFileUtils {
                 + DATABASE);
     }
 
-//    public static String getBackuppath(){
-//        String result = getExternalStorageDirectory();
-//        if(!TextUtils.isEmpty(result)){
-//            result += File.separator+BACKUPPATH+File.separator +DATABASE;
-//        }
-//        return result;
-//    }
+
+    public File getBackUpFile(){
+        File f1 = new File(getExternalStorageDirectory()+File.separator+BACKUPPATH);
+        if(f1.exists()){
+
+        }
+        return f1;
+    }
 
 
     public void makeFileDirSdcrad(String path) {
@@ -42,7 +43,7 @@ public class MyFileUtils {
         }
     }
 
-    public static String getExternalStorageDirectory() {
+    public static String  getExternalStorageDirectory() {
         File sdDir = null;
         boolean sdCardExist = Environment.getExternalStorageState()
                 .equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在

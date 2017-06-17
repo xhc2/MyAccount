@@ -1,9 +1,16 @@
 package sudoku.myself.xhc.com.myaccount;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -35,6 +42,8 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     private AccountDao dao;
+
+    private VersionDao versionDao;
 
     private String categoryItem[];
 
@@ -71,19 +80,19 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
 
     }
 
-    private BackUpData backUpData;
+//    private BackUpData backUpData;
 
     private void init() {
-        backUpData = new BackUpData(this);
+//        backUpData = new BackUpData(this);
         categoryItem = getResources().getStringArray(R.array.category_item);
         dao = new AccountDao(this);
+        versionDao = new VersionDao(this);
         Intent intent = getIntent();
         account = intent.getParcelableExtra("account");
         if (account != null) {
             //修改
             modifyFlag = true;
             etMoney.setText("" + account.getMoney());
-            Log.e("xhc", "category " + account.getCategory());
             etWhere.setText(account.getWhy());
 
         } else {
@@ -93,6 +102,53 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
             account.setDate(System.currentTimeMillis());
         }
         updateUI();
+        getSdcardPermisstion();
+    }
+
+
+    private void getSdcardPermisstion() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int i = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (i != PackageManager.PERMISSION_GRANTED) {
+                // 如果没有授予该权限，就去提示用户请求
+                ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+                        100);
+                Log.e("xhc", " request sdcard permisstion");
+            }
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 100) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 权限被允许
+            } else if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                showToast( R.string.should_open_sdcard_permisstion);
+                finish();
+            } else {
+                // 还是没开权限
+                showToast( R.string.should_open_sdcard_permisstion);
+                finish();
+            }
+        }
+
+    }
+
+    private void xiaoMiPermisstionOpen(){
+        String model = android.os.Build.MANUFACTURER;
+        if ("xiaomi".equalsIgnoreCase(model)) {
+            // 小米手机一旦拒绝了一次权限，将不再询问。所以就直接弹到权限管理部分
+            Uri uri = Uri.parse("package:" + getPackageName());// 包名
+            Intent intent = new Intent("android.settings.APPLICATION_DETAILS_SETTINGS", uri);
+            startActivity(intent);
+        } else {
+            finish();
+        }
     }
 
     private void updateUI() {
@@ -198,12 +254,26 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
             dao.add(account);
         }
         setResult(RESULT_OK);
+
+
+
         backUpDataBase();
         finish();
     }
 
-    private void backUpDataBase() {
 
+    /**
+     * 每次更新数据的时候都会在本地copy下自己的数据库备份
+     * 如果导入数据库文件的时候会去判断数据库文件是否是和自己的数据是同一份
+     * 是就不用copy了
+     * 不是就copy进来。
+     */
+
+    private void backUpDataBase() {
+        long time = System.currentTimeMillis();
+        //更新库的版本号
+        SPUtils.put(AddAccountActivity.this,Constant.Config.BACKUP , time);
+        versionDao.updateVersion(time);
         new Thread(){
             @Override
             public void run() {
@@ -213,9 +283,8 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
                     handler.sendEmptyMessage(0);
                     return ;
                 }
-                myFile.makeFileDirSdcrad(myFile.getExternalStorageDirectory() + "/" + MyFileUtils.BACKUPPATH);
+//                myFile.makeFileDirSdcrad(myFile.getExternalStorageDirectory() + "/" + MyFileUtils.BACKUPPATH);
                 myFile.backUP();
-
             }
         }.start();
 

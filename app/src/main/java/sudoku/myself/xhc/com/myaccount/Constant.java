@@ -11,6 +11,9 @@ public class Constant {
         public final static int WEEK = 2;
         public final static int MONTH = 3;
         public final static int YEAR = 4;
+
+        public final static String BACKUP = "time";
     }
+
 
 }

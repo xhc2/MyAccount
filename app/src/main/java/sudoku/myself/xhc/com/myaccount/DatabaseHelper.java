@@ -2,6 +2,7 @@ package sudoku.myself.xhc.com.myaccount;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -24,7 +25,7 @@ import java.util.Map;
 
         private DatabaseHelper(Context context)
         {
-            super(context, TABLE_NAME, null, 4);
+            super(context, TABLE_NAME, null, 5);
         }
 
         @Override
@@ -34,8 +35,10 @@ import java.util.Map;
             try
             {
                 TableUtils.createTable(connectionSource, Account.class);
+                TableUtils.createTable(connectionSource, VersionBean.class);
             } catch (SQLException e)
             {
+                Log.e("xhc","VersionBean"+e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -48,17 +51,17 @@ import java.util.Map;
         {
             try
             {
-                TableUtils.dropTable(connectionSource, Account.class, true);
-                onCreate(database, connectionSource);
-            } catch (SQLException e)
+                Log.e("xhc" , " update database old "+oldVersion+"  new "+newVersion);
+                if(oldVersion == 4){
+                    TableUtils.createTable(connectionSource, VersionBean.class);
+                }
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
         }
 
         private static DatabaseHelper instance;
-
-
 
 
         /**

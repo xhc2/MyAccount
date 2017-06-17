@@ -56,7 +56,7 @@ public class BackUpData  {
                 try {
                         /*只能创建目录*/
                     file.mkdirs();
-                    Toast.makeText(context, file.getPath(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(context, file.getPath(), Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     Log.e("xhc", " exception " + e.getMessage());

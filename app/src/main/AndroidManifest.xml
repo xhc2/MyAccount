@@ -3,32 +3,35 @@
     package="sudoku.myself.xhc.com.myaccount">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
-        android:name="sudoku.myself.xhc.com.myaccount.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".AddAccountActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BaseActivity" />
-        <activity android:name=".CategoryAccount"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            />
+        <activity
+            android:name=".CategoryAccount"
+            />
+        <activity
+            android:name=".SetttingActivity"
+            />
+
     </application>
 
 </manifest>
