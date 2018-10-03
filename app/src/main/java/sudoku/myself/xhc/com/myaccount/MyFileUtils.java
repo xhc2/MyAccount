@@ -15,15 +15,23 @@ import java.io.OutputStream;
 
 public class MyFileUtils {
 
-    public static final String BACKUPPATH = "xhc_back_up";
+    public static final String BACKUPPATH = "account_back_up";
     public static final String DATABASE = "sqlite-test.db";
-
+    public static final String NEW_DATABASE = "sqlite-test_new.db";
     public void backUP( ) {
         String dbpath = "/data/data/sudoku.myself.xhc.com.myaccount/databases/"+DATABASE;
 
         makeFileDirSdcrad(getExternalStorageDirectory() + "/"+BACKUPPATH);
-        boolean success = copyFile(dbpath, getExternalStorageDirectory() + "/"+BACKUPPATH+"/"
+        File file = new File(getExternalStorageDirectory() + "/"+BACKUPPATH+"/"
                 + DATABASE);
+        if(file.exists()){
+            copyFile(dbpath, getExternalStorageDirectory() + "/"+BACKUPPATH+"/"
+                    + NEW_DATABASE);
+        }
+        else{
+            copyFile(dbpath, getExternalStorageDirectory() + "/"+BACKUPPATH+"/"
+                    + DATABASE);
+        }
     }
 
 

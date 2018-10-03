@@ -67,8 +67,6 @@ public class MainActivity extends BaseActivity implements OnRecyleItemClick<Acco
         adapter.addOnRecyleItemClick(this);
         adapter.setOnItemLongClickLis(this);
 
-        updateUI();
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,8 +81,7 @@ public class MainActivity extends BaseActivity implements OnRecyleItemClick<Acco
         rcView.setLayoutManager(new LinearLayoutManager(this));
         rcView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         rcView.setAdapter(adapter);
-
-
+        updateUI();
     }
 
     @Override
@@ -97,54 +94,38 @@ public class MainActivity extends BaseActivity implements OnRecyleItemClick<Acco
             //更新成功
             updateUI();
         }
-//        else if (requestCode == FILE_SELECT_CODE && resultCode == Activity.RESULT_OK) {
-//            if (resultCode == RESULT_OK) {
-//                String filePath = null;
-//                Uri uri = data.getData();
-//
-//                if ("content".equalsIgnoreCase(uri.getScheme())) {
-//                    String[] projection = {"_data"};
-//                    Cursor cursor = null;
-//
-//                    try {
-//                        cursor = MainActivity.this.getContentResolver().query(uri, projection, null, null, null);
-//                        int column_index = cursor.getColumnIndexOrThrow("_data");
-//                        if (cursor.moveToFirst()) {
-//                            filePath = cursor.getString(column_index);
-//                        }
-//                    } catch (Exception e) {
-//                        // Eat it
-//                    }
-//                } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-//                    filePath = uri.getPath();
-//                }
-//
-//                if (!TextUtils.isEmpty(filePath)) {
-//                    startBackUp(filePath);
-//                } else {
-//                    showToast(R.string.not_file_back_file);
-//                }
-//            }
-//        }
+    }
+
+
+
+    class UpdateUI extends Thread{
+        @Override
+        public void run() {
+            super.run();
+            List<Account> listTemp = dao.getAllByTime();
+            list.clear();
+            if (listTemp != null) {
+                list.addAll(listTemp);
+            }
+            handler.sendEmptyMessage(UPDATEUI);
+            updateUI = null;
+        }
+    }
+
+    private   UpdateUI updateUI = null;
+
+
+
+    private void startUpdateUI(){
+        if(updateUI == null){
+            updateUI = new UpdateUI();
+            updateUI.start();
+        }
     }
 
     public void updateUI() {
         showLoadDialog(R.string.loading);
-        class UpdateUI extends Thread{
-            @Override
-            public void run() {
-                super.run();
-                List<Account> listTemp = dao.getAllByTime();
-                list.clear();
-                if (listTemp != null) {
-                    list.addAll(listTemp);
-                }
-                handler.sendEmptyMessage(UPDATEUI);
-            }
-        }
-        UpdateUI updateUI = new UpdateUI();
-        updateUI.start();
-
+        startUpdateUI();
     }
 
     @Override
@@ -178,43 +159,6 @@ public class MainActivity extends BaseActivity implements OnRecyleItemClick<Acco
         startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
-//    private final int FILE_SELECT_CODE = 322;
-//    private void showFileChooser() {
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType("*/*");
-//        intent.addCategory(Intent.CATEGORY_OPENABLE);
-//
-//        try {
-//            startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
-//        } catch (android.content.ActivityNotFoundException ex) {
-//            Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
-//    private void startBackUp(String file) {
-//        showLoadDialog(getString(R.string.loading));
-//        new BackUpThread(file).start();
-//    }
-
-//    private class BackUpThread extends Thread {
-//        String strPath;
-//
-//        BackUpThread(String file) {
-//            strPath = file;
-//        }
-//
-//        @Override
-//        public void run() {
-//            super.run();
-//            AccountDao orgindao = new AccountDao();
-//            orgindao.getBackUpDataBase(strPath);
-//            List<Account> listTemp = orgindao.getAll();
-//            Log.e("xhc", " all " + listTemp);
-//            dao.addAll(listTemp);
-//            handler.sendEmptyMessage(BACKUPSUCCESS);
-//        }
-//
-//    }
 
     @Override
     public void onLongClick(final Account account) {

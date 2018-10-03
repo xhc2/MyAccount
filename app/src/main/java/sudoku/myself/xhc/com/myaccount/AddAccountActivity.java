@@ -43,7 +43,7 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
 
     private AccountDao dao;
 
-    private VersionDao versionDao;
+//    private VersionDao versionDao;
 
     private String categoryItem[];
 
@@ -86,7 +86,7 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
 //        backUpData = new BackUpData(this);
         categoryItem = getResources().getStringArray(R.array.category_item);
         dao = new AccountDao(this);
-        versionDao = new VersionDao(this);
+//        versionDao = new VersionDao(this);
         Intent intent = getIntent();
         account = intent.getParcelableExtra("account");
         if (account != null) {
@@ -270,10 +270,10 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
      */
 
     private void backUpDataBase() {
-        long time = System.currentTimeMillis();
+//        long time = System.currentTimeMillis();
         //更新库的版本号
-        SPUtils.put(AddAccountActivity.this,Constant.Config.BACKUP , time);
-        versionDao.updateVersion(time);
+//        SPUtils.put(AddAccountActivity.this,Constant.Config.BACKUP , time);
+//        versionDao.updateVersion(time);
         new Thread(){
             @Override
             public void run() {
@@ -283,7 +283,6 @@ public class AddAccountActivity extends BaseActivity implements TagClickListener
                     handler.sendEmptyMessage(0);
                     return ;
                 }
-//                myFile.makeFileDirSdcrad(myFile.getExternalStorageDirectory() + "/" + MyFileUtils.BACKUPPATH);
                 myFile.backUP();
             }
         }.start();

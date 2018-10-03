@@ -70,6 +70,30 @@ public class AccountDao {
         return true;
     }
 
+    public long getVersion(){
+
+        QueryBuilder<Account, Integer> builder = dao.queryBuilder();
+        builder.orderBy("date", true);
+        try {
+            Account a =  builder.queryForFirst();
+            return a.getDate();
+        } catch (Exception e) {
+            Log.e("xhc" , "version sql exception "+e.getMessage());
+            e.printStackTrace();
+        }
+
+//        try {
+//            Account account = dao.queryForId(1);
+//            if(account != null){
+//                account.getDate();
+//            }
+//        } catch (Exception e) {
+//            Log.e("xhc" , " sql exception "+e.getMessage());
+//            e.printStackTrace();
+//        }
+        return 0L;
+    }
+
     public void add(Account account) {
         try {
             dao.createOrUpdate(account);
